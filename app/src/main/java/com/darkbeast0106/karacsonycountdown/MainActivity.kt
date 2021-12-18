@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var szamlalo : TextView
-    private lateinit var karacsony : Date
+    private lateinit var szamlalo: TextView
+    private lateinit var karacsony: Date
     private lateinit var myTimer: Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,14 +16,16 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         szamlalo = findViewById(R.id.szamlalo)
-        val most = Calendar.getInstance().time
-        var ev = most.year
-        if (most.month == 11 && most.date >= 24) {
+        val most = Calendar.getInstance()
+        var ev = most.get(Calendar.YEAR)
+        if (most.get(Calendar.MONTH) == 11 && most.get(Calendar.DATE) >= 24) {
             ev++
         }
-        karacsony = Date(ev, 11, 24)
+        val karacsonyCalendar = Calendar.getInstance()
+        karacsonyCalendar.set(ev, 11, 24, 0, 0, 0)
+        karacsony = karacsonyCalendar.time
     }
 
 
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         myTimer = Timer()
-        val task = object: TimerTask(){
+        val task = object : TimerTask() {
             override fun run() {
                 val most = Calendar.getInstance().time
                 var hatralevoIdo = karacsony.time - most.time
